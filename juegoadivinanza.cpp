@@ -1,19 +1,44 @@
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 int main (){
-cout << "*****************************************"<<endl;
-cout << "* Bienvenido al Juego de la Adivinanza! *"<<endl;
-cout << "*****************************************"<<endl;
+cout << "******************************************"<<endl;
+cout << "* Bienvenido al Juego de la Adivinanza!  *"<<endl;
+cout << "* Ingrese un número en el rango: 1 a 100 *"<<endl;
+cout << "******************************************"<<endl;
 
-const int NUMERO_SECRETO = 42;
+cout << endl;
+cout << "Escoja el nivel de dificultad"<<endl;
+cout << "Fácil (F), Medio (M) o Difícil (D)" << endl;
+
+char dificultad;
+cin >> dificultad;
+
+int numero_tentativas;
+if(dificultad=='F'){
+    numero_tentativas = 15;
+}
+else if(dificultad=='M'){
+    numero_tentativas = 10;
+}
+else {
+    numero_tentativas = 5;
+}
+
+// Inicializar la semilla para generar números aleatorios
+srand(time(0));
+const int NUMERO_SECRETO = 1 + rand() % 100;  // Generar un número aleatorio entre 1 y 100
+cout << "Número secreto aleatorio generado entre 1 y 100: " << NUMERO_SECRETO << endl;
+
 int adivina;
 
 bool no_acerto = true;
-int intentos = 0;
-double puntos = 1000.0;  // ...guarda los puntos ganados 
+int intentos;
+double puntos = 1000.0;  // ...guarda los puntos ganados
 
-while (no_acerto){
-    intentos ++;
+for(intentos=1; intentos <= numero_tentativas; intentos ++){
+    //intentos ++;
     cout << "Tentativa " << intentos << endl;
     cout << "¿cuál es el número? ";
     cin >> adivina;
@@ -27,6 +52,7 @@ while (no_acerto){
    if(acerto){
        cout << "Felicitaciones!!! ... adivinó el número secreto" << endl;
        no_acerto = false;
+       break;
    }
 
    else if(mayor){
@@ -41,8 +67,17 @@ while (no_acerto){
 }
 
  cout << "Finalizó el juego" << endl;
- cout << "Adivinó el número secreto en " << intentos << " intentos." << endl;
- cout.precision(2);
- cout << fixed;
- cout << "Su puntuación fue de " << puntos << " puntos" << endl;
+ if(no_acerto){
+     cout << "Lo siento ... perdió el juego" << endl;
+ }
+ else {
+     cout << "Adivinó el número secreto en " << intentos << " intentos." << endl;
+     cout.precision(2);
+     cout << fixed;
+     cout << "Su puntuación fue de " << puntos << " puntos" << endl;
+
+ }
+
+
+
 }
